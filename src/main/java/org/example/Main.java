@@ -2,6 +2,7 @@ package org.example;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -16,11 +17,19 @@ public class Main {
 
         Configuration config = new Configuration();
 
+        config.addAnnotatedClass(org.example.Student.class);
+
+        config.configure();
+
         SessionFactory sf = config.buildSessionFactory();
 
         Session session = sf.openSession();
 
+        Transaction transaction = session.beginTransaction();
+
         session.persist(s1);
+
+        transaction.commit();
 
 
 
