@@ -11,27 +11,34 @@ public class Main {
     public static void main(String[] args) {
 
         Student s1 = new Student();
-        s1.setId(001);
-        s1.setName("John");
-        s1.setAge(28);
+        s1.setId(004);
+        s1.setName("Ruwan");
+        s1.setAge(20);
 
-        Configuration config = new Configuration();
+//        Configuration config = new Configuration();
+//        config.addAnnotatedClass(org.example.Student.class);
+//        config.configure();
+//
+//        SessionFactory sf = config.buildSessionFactory();
 
-        config.addAnnotatedClass(org.example.Student.class);
+        //Optimize the above code set
+        SessionFactory sf = new Configuration().addAnnotatedClass(org.example.Student.class).configure().buildSessionFactory();
 
-        config.configure();
-
-        SessionFactory sf = config.buildSessionFactory();
-
+        //Open a session
         Session session = sf.openSession();
 
+        //Begin a transaction
         Transaction transaction = session.beginTransaction();
 
+        //Persist the object/ save
         session.persist(s1);
 
+        //Commit the transaction
         transaction.commit();
 
+        session.close();
 
+        sf.close();
 
     }
 }
